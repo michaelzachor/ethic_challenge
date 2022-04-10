@@ -3,11 +3,11 @@
 ## How to compile and run the application
 The application can be found in 
 
-```/main/java/com/example/Challenge.java```
+```/src/main/java/com/example/Challenge.java```
 
 Unit testing can be found in 
 
-```/test/java/com/example/ChallengeTest.java```
+```/src/test/java/com/example/ChallengeTest.java```
 
 To compile application: 
 - In the shell, navigate to the ```/ethicchallengewithtesting``` directory.
