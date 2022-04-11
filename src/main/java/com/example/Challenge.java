@@ -50,7 +50,11 @@ class Challenge {
   public static void main(String args[]) { 
     String textFile = "words.txt";
     Challenge ch = new Challenge();
-    System.out.println(ch.challenge(textFile));
+    HashMap<String, String> ret = ch.challenge("./text_files/"+textFile);
+    System.out.println("char count: " + ret.get("char count")
+                    +"\nword count: " + ret.get("word count")
+                    +"\npalindrome count: " + ret.get("palindrome count")
+                    +"\npalindrome list: " + ret.get("palindrome list"));
   } 
 
 }
