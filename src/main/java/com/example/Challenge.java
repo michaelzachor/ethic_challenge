@@ -2,8 +2,6 @@ package com.example;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 import java.util.*;
 
 class Challenge {
@@ -12,49 +10,47 @@ class Challenge {
     return word.equals(new StringBuffer(word).reverse().toString());
   }
 
-  public String challenge(String filename) {
-      try {
-        ArrayList<String> words = new ArrayList<>(); 
-        int wordCount; 
-        int charCount = 0;
-        int palindromeCount;
-        String ret;
-  
-        File inputFile = new File(filename);
-        Scanner fileScan = new Scanner(inputFile);
-  
-        while (fileScan.hasNextLine()) {
-          String line = fileScan.nextLine();
-          if (line.length() > 0) {
-              words.addAll(Arrays.asList(line.replaceAll("\\p{P}", "").split(" ")));
-              charCount += line.length();
-          };
-        }
-        wordCount = words.size();
-        words.removeIf(word -> !isPalindrome(word));
-        palindromeCount = words.size();
-  
-        ret = "word count: " + wordCount
-              + "\ncharacter count: " + charCount
-              + "\npalindrome count: " + palindromeCount
-              + "\npalindrome list: " + words;
-        System.out.println(ret);
-      //   System.out.println("word count: " + wordCount);
-      //   System.out.println("character count: " + charCount);
-      //   System.out.println("palindrome count: " + palindromeCount);
-      //   System.out.println("palindrome list: " + words);
-        fileScan.close();
-        return ret;
-      } catch (FileNotFoundException e) {
-        System.out.println("No file found.");
-        e.printStackTrace();
-        return("No file found.");
+  public HashMap<String, String> challenge(String filename) {
+
+    int charCount = 0;
+    ArrayList<String> words = new ArrayList<>(); 
+    HashMap<String, String> ret = new HashMap<String, String>();
+
+    File inputFile;
+    Scanner fileScan;
+
+    try {
+      inputFile = new File(filename);
+      fileScan = new Scanner(inputFile);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      return (null);
+    }
+
+    while (fileScan.hasNextLine()) {
+      String line = fileScan.nextLine();
+      // add each word from each nonempty line to the words list, without any punctuation
+      if (line.length() > 0) {
+          words.addAll(Arrays.asList(line.replaceAll("\\p{P}", "").split(" ")));
+          charCount += line.length();
       }
+    }
+
+    fileScan.close();
+
+    ret.put("char count",String.valueOf(charCount));
+    ret.put("word count",String.valueOf(words.size()));
+
+    words.removeIf(word -> !isPalindrome(word));
+    ret.put("palindrome count",String.valueOf(words.size()));
+    ret.put("palindrome list",words.toString());
+    return ret;
   }
 
   public static void main(String args[]) { 
+    String textFile = "words.txt";
     Challenge ch = new Challenge();
-    ch.challenge("words.txt");
+    System.out.println(ch.challenge(textFile));
   } 
 
 }
